@@ -4,6 +4,6 @@ import 'package:get/get.dart';
 class HomeBind extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AssistanceController());
+    Get.lazyPut<AssistanceController>(() => AssistanceController());
   }
 }

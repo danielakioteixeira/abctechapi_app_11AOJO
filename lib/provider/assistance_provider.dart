@@ -1,6 +1,5 @@
-import 'package:get/get_connect.dart';
-
-import '../constants.dart';
+import 'package:abc_tech_app/constants.dart';
+import 'package:get/get.dart';
 
 abstract class AssistanceProviderInterface {
   Future<Response> getAssists();
@@ -9,5 +8,5 @@ abstract class AssistanceProviderInterface {
 class AssistanceProvider extends GetConnect
     implements AssistanceProviderInterface {
   @override
-  Future<Response> getAssists() => get('${Constants.url}/assists');
+  Future<Response> getAssists() => get('${Constants.url}/assistance');
 }
