@@ -55,30 +55,33 @@ class OrderPage extends GetView<OrderController> {
               Ink(
                   decoration: const ShapeDecoration(
                       shape: CircleBorder(), color: Colors.blueAccent),
+                  width: 40,
+                  height: 40,
                   child: IconButton(
                       icon: const Icon(
                         Icons.search,
                         color: Colors.white,
                       ),
-                      onPressed: () => controller.editServices()),
-                  width: 40,
-                  height: 40)
+                      onPressed: () => controller.editServices()))
             ]),
             Obx(
               () => renderAssists(controller.selectedAssistances),
             ),
             Row(children: [
               Expanded(
-                  child: ElevatedButton(onPressed: () {
-                FocusScope.of(context).unfocus();
-                controller.finishStartOrder();
-              }, child: Obx((() {
-                if (controller.screenState.value == OrderState.creating) {
-                  return const Text("Inicar serviço");
-                } else {
-                  return const Text("Finalizar serviço");
-                }
-              }))))
+                  child: ElevatedButton(
+                onPressed: () => {counterButtonPress(context)},
+                child: Obx((() {
+                  if (controller.selectedAssistances.isEmpty) {
+                    return const Text("SELECIONE AO MENOS 1 SERVIÇO");
+                  } else if (controller.screenState.value ==
+                      OrderState.creating) {
+                    return const Text("Iniciar serviço");
+                  } else {
+                    return const Text("Finalizar serviço");
+                  }
+                })),
+              ))
             ]),
           ],
         ),
@@ -98,5 +101,12 @@ class OrderPage extends GetView<OrderController> {
             child: controller.obx((state) => renderFromScreen(context),
                 onLoading: const Center(child: CircularProgressIndicator()),
                 onError: (error) => Text(error.toString()))));
+  }
+
+  void counterButtonPress(context) {
+    if (controller.selectedAssistances.isNotEmpty) {
+      FocusScope.of(context).unfocus();
+      controller.finishStartOrder();
+    }
   }
 }
